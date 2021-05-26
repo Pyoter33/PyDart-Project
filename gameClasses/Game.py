@@ -142,7 +142,7 @@ class Game:
         player.partialScore[player.currentPartialScore] = ' '
         oldRoundScore = 0
 
-        for i in range(1, player.currentPartialScore):
+        for i in range(1, player.currentPartialScore + 1):
             elem = player.allScores[len(player.allScores) - i]
             oldRoundScore += elem[0]
 
@@ -192,6 +192,7 @@ class Game:
         player.mainScore = player.mainScoreStack.pop()
         player.currentPartialScore = player.partialScoreStack.pop()
         player.legs = player.legsStack.pop()
+        player.wonLegs -= 1
         self.undo(player)
 
         self.recoverPartialScore(playerToRecover)
@@ -273,10 +274,10 @@ class Game:
         player.roundScore = 0
         player.partialScore[player.currentPartialScore] = 'OT'
 
-        for i in range(1, player.currentPartialScore + 1):
-            if player.allScores[-1][1]:
+        for i in range(1, player.currentPartialScore + 2):
+            if player.allScores[len(player.allScores) - i][1]:
                 player.doubles -= 1
-            if player.allScores[-1][2]:
+            if player.allScores[len(player.allScores) - i][2]:
                 player.triples -= 1
 
         player.partialScoreStack.append(player.currentPartialScore + 1)
